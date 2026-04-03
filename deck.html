@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TransitHub — Pitch Deck</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;0,900;1,300&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Brand palette extracted from logo */
+    --navy:      #1e3050;
+    --navy-dark: #131f35;
+    --navy-mid:  #243a60;
+    --lime:      #7ec800;
+    --lime-dim:  #5f9600;
+    --lime-glow: rgba(126,200,0,0.18);
+    --lime-line: rgba(126,200,0,0.35);
+    --ink:       #0d1220;
+    --ink2:      #101828;
+    --mist:      #7a9ab5;
+    --mist-light:#b0cce0;
+    --white:     #ffffff;
+    --border:    rgba(255,255,255,0.08);
+    --grid:      rgba(255,255,255,0.03);
+    --sidebar-w: 288px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; overflow: hidden; }
+
+  body {
+    font-family: "Inter", "Montserrat", "Poppins", "Helvetica", sans-serif;
+    background: var(--ink);
+    color: var(--white);
+    display: flex;
+  }
+
+  /* ─── SIDEBAR ─── */
+  .sidebar {
+    width: var(--sidebar-w);
+    flex-shrink: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: var(--navy-dark);
+    border-right: 1px solid rgba(126,200,0,0.15);
+    position: relative;
+    z-index: 10;
+  }
+
+  .sidebar-top {
+    padding: 28px 24px 22px;
+    border-bottom: 1px solid rgba(126,200,0,0.15);
+  }
+
+  .logo-img {
+    width: 180px;
+    height: auto;
+    display: block;
+  }
+
+  .logo-tagline {
+    font-family: "Inter", "Montserrat", "Helvetica", sans-serif; font-weight: 600;
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--mist);
+    text-transform: uppercase;
+    margin-top: 8px;
+  }
+
+  .nav-list {
+    list-style: none;
+    padding: 18px 0;
+    flex: 1;
+    overflow-y: auto;
+  }
+  .nav-list::-webkit-scrollbar { width: 3px; }
+  .nav-list::-webkit-scrollbar-thumb { background: rgba(126,200,0,0.2); border-radius: 2px; }
+
+  .nav-item { padding: 0 14px; margin-bottom: 2px; }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 10px 13px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    border: 1px solid transparent;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+  }
+
+  .nav-link:hover { background: rgba(126,200,0,0.06); border-color: rgba(126,200,0,0.18); }
+
+  .nav-link.active {
+    background: rgba(126,200,0,0.1);
+    border-color: rgba(126,200,0,0.32);
+  }
+
+  .nav-accent {
+    position: absolute;
+    left: 0; top: 20%; bottom: 20%;
+    width: 3px;
+    background: var(--lime);
+    border-radius: 0 2px 2px 0;
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+  .nav-link.active .nav-accent { opacity: 1; }
+
+  .nav-num {
+    font-family: "Inter", "Montserrat", "Helvetica", sans-serif; font-weight: 600;
+    font-size: 11px;
+    color: var(--mist);
+    letter-spacing: 1px;
+    width: 18px;
+    flex-shrink: 0;
+    transition: color 0.25s;
+  }
+  .nav-link.active .nav-num { color: var(--lime); }
+
+  .nav-icon { font-size: 14px; width: 18px; text-align: center; flex-shrink: 0; }
+
+  .nav-label {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--mist-light);
+    transition: color 0.25s;
+    line-height: 1.3;
+  }
+  .nav-sub {
+    font-size: 12px;
+    color: var(--mist);
+    font-weight: 300;
+    display: block;
+    margin-top: 1px;
+  }
+  .nav-link.active .nav-label { color: var(--white); }
+
+  .sidebar-progress {
+    padding: 18px 24px 26px;
+    border-top: 1px solid rgba(126,200,0,0.12);
+  }
+  .progress-label {
+    font-family: "Inter", "Montserrat", "Helvetica", sans-serif; font-weight: 600;
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--mist);
+    text-transform: uppercase;
+    margin-bottom: 9px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .progress-track {
+    height: 2px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--navy-mid), var(--lime));
+    border-radius: 2px;
+    transition: width 0.4s ease;
+    width: 12.5%;
+  }
+
+  /* ─── CONTENT PANE ─── */
+  .content-pane {
+    flex: 1;
+    height: 100vh;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+  }
+  .content-pane::-webkit-scrollbar { width: 4px; }
+  .content-pane::-webkit-scrollbar-thumb { background: rgba(126,200,0,0.2); border-radius: 2px; }
+
+  /* ─── SECTIONS ─── */
+  .section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 70px 64px;
+    position: relative;
+    overflow: hidden;
+  }
+  .section:not(:last-child) { border-bottom: 1px solid var(--border); }
+
+  .section-inner {
+    max-width: 860px;
+    width: 100%;
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .bg-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 56px 56px;
+    pointer-events: none;
+  }
+
+  /* ─── SLIDE LABEL ─── */
+  .slide-label {
+    font-family: "Inter", "Montserrat", "Helvetica", sans-serif; font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 3px;
+    color: var(--lime);
+    text-transform: uppercase;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .slide-label::after { content:""; width:40px; height:1px; background:var(--lime); opacity:0.4; }
+
+  /* ─── S1: HERO ─── */
+  #s1 { background: radial-gradient(ellipse at 20% 50%, #182840 0%, var(--ink) 65%); }
+
+  .hero-title {
+    font-family: "Montserrat", "Poppins", "Helvetica", sans-serif;
+    font-weight: 900;
+    text-transform: uppercase;
+    font-size: clamp(50px, 6.5vw, 96px);
+    line-height: 1.0;
+    letter-spacing: -0.01em;
+    margin-bottom: 22px;
+  }
+  .hero-title span { color: var(--lime); display: block; }
+
+  .hero-sub {
+    font-size: 20px; font-weight: 300;
+    color: var(--mist-light);
+    max-width: 500px; line-height: 1.75; margin-bottom: 44px;
+  }
+
+  .hero-tags { display: flex; gap: 14px; flex-wrap: wrap; }
+
+  .hero-tag {
+    font-family: "Inter", "Montserrat", "Helvetica", sans-serif; font-weight: 600;
+    font-size: 12px;
+    padding: 9px 18px;
+    border: 1px solid rgba(126,200,0,0.25);
+    border-radius: 2px;
+    color: var(--lime-dim);
+    letter-spacing: 1px;
+    background: rgba(126,200,0,0.05);
+    transition: all 0.25s;
+  }
+  .hero-tag:hover { border-color: var(--lime); color: var(--lime); background: rgba(126,200,0,0.1); }
+
+  .hero-globe {
+    position: absolute; right: -60px; top: 50%;
+    transform: translateY(-50%);
+    width: 380px; height: 380px;
+    opacity: 0.07; pointer-events: none;
+  }
+
+  /* ─── S2: PROBLEM ─── */
+  #s2 { background: var(--ink2); }
+
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+
+  .chaos-box {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border);
+    border-radius: 6px; padding: 28px;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+
+  .chaos-node {
+    display: flex; align-items: center; gap: 12px;
+    padding: 11px 15px;
+    background: rgba(255,255,255,0.025);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 4px;
+    font-size: 15px; color: var(--mist-light);
+    animation: float 3s ease-in-out infinite;
+  }
+  .chaos-node:nth-child(2){animation-delay:.4s;margin-left:14px}
+  .chaos-node:nth-child(3){animation-delay:.9s;margin-left:-6px}
+  .chaos-node:nth-child(4){animation-delay:1.3s;margin-left:20px}
+  .chaos-node:nth-child(5){animation-delay:.6s;margin-left:4px}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+
+  .chaos-icon { font-size: 17px; }
+
+  .prob-title {
+    font-family: "Montserrat", "Poppins", "Helvetica", sans-serif;
+    font-weight: 900;
+    text-transform: uppercase;
+    font-size: clamp(28px, 3.2vw, 46px);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin-bottom: 20px;
+  }
+
+  .prob-list { list-style: none; margin-bottom: 22px; }
+  .prob-list li {
+    padding: 10px 0; border-bottom: 1px solid var(--border);
+    color: var(--mist-light); font-size: 16px;
+    display: flex; gap: 10px;
+  }
+  .prob-list li::before { content: "—"; color: var(--lime); }
+
+  .callout {
+    background: rgba(126,200,0,0.08);
+    border: 1px solid rgba(126,200,0,0.3);
+    border-left: 3px solid var(--lime);
+    padding: 14px 18px; border-radius: 2px;
+    font-size: 15px; font-weight: 500; color: #a8d860;
+  }
+
+  .prob-insights {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-top: 24px;
+  }
+  @media (max-width: 800px) { .prob-insights { grid-template-columns: 1fr; } }
+
+  .prob-insight-card {
+    background: rgba(15, 25, 45, 0.55);
+    border: 1px solid rgba(126,200,0,0.15);
+    border-top: 3px solid var(--lime);
+    border-radius: 6px;
+    padding: 18px 16px;
+  }
+  .prob-insight-label {
+    font-family: "Montserrat","Poppins","Helvetica",sans-serif;
+    font-weight: 800;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--lime);
+    margin-bottom: 8px;
+  }
+  .prob-insight-body { font-size: 13px; color: var(--mist); line-height: 1.6; }
+
+  /* ─── S3: PAIN ─── */
+  #s3 { background: radial-gradient(ellipse at 70% 30%, #131f35 0%, var(--ink) 60%); }
+
+  .sec-title {
+    font-family: "Montserrat", "Poppins", "Helvetica", sans-serif;
+    font-weight: 900;
+    text-transform: uppercase;
+    font-size: clamp(36px, 4.5vw, 64px);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    margin-bottom: 36px;
+  }
+
+  .pain-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+  .pain-card {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border);
+    border-radius: 6px; padding: 26px;
+    transition: all 0.3s ease; cursor: default;
+    position: relative; overflow: hidden;
+  }
+  .pain-card::before {
+    content:""; position:absolute; inset:0;
+    background:linear-gradient(135deg,rgba(126,200,0,0.07),transparent);
+    opacity:0; transition:opacity 0.3s;
+  }
+  .pain-card:hover { border-color: rgba(126,200,0,0.35); transform: translateY(-3px); }
+  .pain-card:hover::before { opacity: 1; }
+
+  .pain-icon { font-size: 30px; margin-bottom: 12px; display: block; }
+  .pain-title { font-size: 17px; font-weight: 700; margin-bottom: 7px; }
+  .pain-desc { font-size: 14px; color: var(--mist); line-height: 1.6; }
+
+  /* ─── S4: WHY NOW ─── */
+  #s4 { background: var(--navy-dark); }
+
+  .why-header { text-align: center; margin-bottom: 44px; }
+
+  .stat-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 28px; }
+
+  .stat-col {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border);
+    border-radius: 6px; padding: 26px 20px;
+    transition: all 0.3s;
+  }
+  .stat-col:hover { border-color: rgba(126,200,0,0.35); }
+
+  .stat-label {
+    font-family: "Inter", "Montserrat", "Helvetica", sans-serif; font-weight: 600;
+    font-size: 9px; letter-spacing: 2.5px;
+    color: var(--lime); text-transform: uppercase;
+    margin-bottom: 16px;
+    display: flex; align-items: center; gap: 7px;
+  }
+  .stat-label .d { width: 5px; height: 5px; border-radius: 50%; background: var(--lime); flex-shrink:0; }
+
+  .stat-num {
+    font-family: "Montserrat", "Poppins", "Helvetica", sans-serif;
+    font-weight: 900;
+    font-size: 44px; color: var(--lime);
+    line-height: 1; display: block; margin-bottom: 4px;
+  }
+
+  .stat-pt {
+    font-size: 15px; color: var(--mist-light);
+    padding: 8px 0; border-bottom: 1px solid var(--border);
+    line-height: 1.55;
+  }
+  .stat-pt:last-child { border-bottom: none; }
+
+  .bot-highlight {
+    background: rgba(126,200,0,0.08);
+    border: 1px solid rgba(126,200,0,0.28);
+    border-left: 3px solid var(--lime);
+    padding: 16px 22px; border-radius: 2px;
+    font-size: 16px; color: #a8d860; font-style: italic;
+  }
+
+  /* ─── S5: SOLUTION ─── */
+  #s5 { background: radial-gradient(ellipse at 50% 50%, #142030 0%, var(--ink) 65%); }
+
+  .sol-header { text-align: center; margin-bottom: 46px; }
+
+  .flow {
+    display: flex; align-items: center;
+    justify-content: center; margin-bottom: 36px;
+  }
+
+  .flow-node {
+    flex: 1; text-align: center;
+    padding: 22px 14px;
+    background: rgba(255,255,255,0.025);
+    border: 1px solid var(--border);
+    border-radius: 6px; transition: all 0.3s;
+  }
+  .flow-node:hover { transform: scale(1.02); }
+
+  .flow-node.hub {
+    flex: 1.3;
+    background: rgba(126,200,0,0.1);
+    border-color: rgba(126,200,0,0.45);
+    transform: scale(1.04); position: relative; z-index: 2;
+  }
+  .flow-node.hub:hover { transform: scale(1.08); }
+
+  .fn-emoji { font-size: 30px; margin-bottom: 10px; display: block; }
+
+  .fn-title {
+    font-family: "Montserrat", "Poppins", "Helvetica", sans-serif;
+    font-weight: 900;
+    text-transform: uppercase;
+    font-size: 18px;
+    letter-spacing: 0.03em;
+    margin-bottom: 8px;
+  }
+
+  .fn-sub { font-size: 13px; color: var(--mist); line-height: 1.7; }
+  .fn-sub span { display: block; }
+
+  .flow-arr {
+    font-size: 22px; color: var(--lime);
+    padding: 0 10px; flex-shrink: 0;
+    animation: arrPulse 1.6s ease-in-out infinite;
+  }
+  .flow-arr:last-of-type { animation-delay: .5s; }
+  @keyframes arrPulse{0%,100%{opacity:.4;transform:translateX(0)}50%{opacity:1;transform:translateX(4px)}}
+
+  .sol-pills {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+  }
+  .sol-pill {
+    text-align: center; padding: 16px 10px;
+    font-size: 14px; color: var(--mist);
+    border-left: 1px solid var(--border);
+  }
+  .sol-pill:first-child { border-left: none; }
+  .sol-pill strong { display: block; color: var(--white); margin-bottom: 3px; font-size: 15px; }
+
+  /* ─── S6: BENEFITS ─── */
+  #s6 { background: var(--ink2); }
+
+  .benefits-wrap { display: grid; grid-template-columns: 1fr 280px; gap: 40px; align-items: start; }
+
+  .benefit-list { list-style: none; }
+
+  .benefit-item {
+    display: flex; align-items: flex-start; gap: 16px;
+    padding: 16px 0; border-bottom: 1px solid var(--border);
+    transition: padding-left 0.25s; cursor: default;
+  }
+  .benefit-item:last-child { border-bottom: none; }
+  .benefit-item:hover { padding-left: 6px; }
+
+  .b-emoji { font-size: 22px; width: 30px; text-align: center; flex-shrink: 0; margin-top: 2px; }
+  .b-text strong { display: block; font-size: 17px; color: var(--white); margin-bottom: 3px; }
+  .b-text span { font-size: 14px; color: var(--mist); }
+
+  .side-card {
+    background: linear-gradient(160deg, rgba(30,48,80,0.6), rgba(20,32,56,0.4));
+    border: 1px solid rgba(126,200,0,0.25);
+    border-top: 3px solid var(--lime);
+    border-radius: 6px; padding: 28px 22px;
+    text-align: center; position: sticky; top: 24px;
+  }
+  .side-card-icon { font-size: 40px; margin-bottom: 16px; display: block; }
+  .side-card-title {
+    font-family: "Montserrat", "Poppins", "Helvetica", sans-serif;
+    font-weight: 900;
+    text-transform: uppercase;
+    font-size: 20px; line-height: 1.25; margin-bottom: 12px;
+    letter-spacing: -0.01em;
+  }
+  .side-card-sub { font-size: 14px; color: #90c840; line-height: 1.65; font-style: italic; }
+
+  /* ─── OTA IMPACT BAR ─── */
+  .ota-impact {
+    margin-top: 28px;
+    background: linear-gradient(135deg, rgba(126,200,0,0.08), rgba(20,32,56,0.5));
+    border: 1px solid rgba(126,200,0,0.2);
+    border-left: 4px solid var(--lime);
+    border-radius: 6px;
+    padding: 20px 28px;
+  }
+  .ota-impact-title {
+    font-family: "Montserrat", "Poppins", "Helvetica", sans-serif;
+    font-weight: 800;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--lime);
+    margin-bottom: 14px;
+  }
+  .ota-impact-grid {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .ota-impact-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    min-width: 180px;
+  }
+  .ota-arrow {
+    font-size: 26px;
+    font-weight: 900;
+    line-height: 1;
+    min-width: 24px;
+    text-align: center;
+  }
+  .ota-arrow.up { color: var(--lime); }
+  .ota-arrow.down { color: #ff6b6b; }
+  .ota-impact-text { display: flex; flex-direction: column; }
+  .ota-impact-text strong { font-size: 15px; color: var(--white); }
+  .ota-impact-text span { font-size: 13px; color: var(--mist); line-height: 1.4; }
+
+  /* ─── S7: WHY WIN ─── */
+  #s7 { background: radial-gradient(ellipse at 20% 70%, #131f35 0%, var(--ink) 60%); }
+
+  .win-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+  .win-card {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border);
+    border-radius: 6px; padding: 32px;
+    transition: transform 0.3s;
+  }
+  .win-card:hover { transform: translateY(-4px); border-color: rgba(126,200,0,0.3); }
+
+  .win-icon { font-size: 34px; margin-bottom: 16px; display: block; }
+
+  .win-title {
+    font-family: "Montserrat", "Poppins", "Helvetica", sans-serif;
+    font-weight: 900;
+    text-transform: uppercase;
+    font-size: 22px;
+    letter-spacing: 0.02em;
+    margin-bottom: 16px; line-height: 1.1;
+  }
+
+  .win-list { list-style: none; }
+  .win-list li {
+    font-size: 15px; color: var(--mist-light);
+    padding: 9px 0; border-bottom: 1px solid var(--border);
+    display: flex; gap: 10px; line-height: 1.5;
+  }
+  .win-list li:last-child { border-bottom: none; }
+  .win-list li::before { content: "→"; color: var(--lime); flex-shrink: 0; }
+
+  /* ─── S8: PRICING ─── */
+  #s8 { background: radial-gradient(ellipse at 80% 20%, #0f2040 0%, var(--ink) 65%); }
+
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-top: 8px;
+  }
+  @media (max-width: 900px) { .pricing-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 580px) { .pricing-grid { grid-template-columns: 1fr; } }
+
+  .pricing-card {
+    background: linear-gradient(160deg, rgba(30,48,80,0.55), rgba(15,25,45,0.45));
+    border: 1px solid rgba(126,200,0,0.18);
+    border-top: 3px solid var(--lime);
+    border-radius: 8px;
+    padding: 22px 20px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .pricing-card-icon { font-size: 28px; line-height: 1; }
+  .pricing-card-title {
+    font-family: "Montserrat","Poppins","Helvetica",sans-serif;
+    font-weight: 800;
+    font-size: 15px;
+    color: var(--white);
+    line-height: 1.25;
+  }
+  .pricing-card-desc { font-size: 13px; color: var(--mist); line-height: 1.55; }
+
+  /* ─── S9: CLOSING ─── */
+  #s9 {
+    background: linear-gradient(135deg, var(--navy-dark) 0%, #0e1828 50%, var(--ink) 100%);
+    text-align: center;
+  }
+
+  .closing-quote { max-width: 680px; margin: 0 auto 46px; }
+
+  .q-mark {
+    font-family: "Montserrat", "Poppins", "Helvetica", sans-serif;
+    font-weight: 900;
+    font-size: 120px; line-height: 0.7;
+    color: var(--lime); opacity: 0.2;
+    display: block; margin-bottom: -10px;
+  }
+
+  .q-text {
+    font-size: clamp(17px, 2vw, 22px); font-weight: 300;
+    line-height: 1.65; color: #cad8e8;
+    font-style: italic; margin-bottom: 20px;
+  }
+
+  .q-attr {
+    font-family: "Inter", "Montserrat", "Helvetica", sans-serif; font-weight: 600;
+    font-size: 10px; letter-spacing: 3px;
+    color: var(--lime-dim); text-transform: uppercase;
+  }
+
+  .closing-brand {
+    font-family: "Montserrat", "Poppins", "Helvetica", sans-serif;
+    font-weight: 900;
+    text-transform: uppercase;
+    font-size: clamp(48px, 7vw, 88px);
+    letter-spacing: 0.08em;
+    line-height: 1; margin-bottom: 10px;
+    color: var(--white);
+  }
+  .closing-brand span { color: var(--lime); }
+
+  .closing-line { font-size: 20px; color: var(--mist); font-weight: 300; margin-bottom: 40px; }
+
+  .cta-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 15px 36px;
+    background: var(--lime); color: var(--navy-dark);
+    font-family: "Inter", "Montserrat", "Helvetica", sans-serif; font-weight: 600;
+    font-size: 14px; letter-spacing: 2px; text-transform: uppercase;
+    text-decoration: none; border-radius: 2px;
+    border: none; cursor: pointer;
+    font-weight: 700;
+    transition: all 0.3s;
+  }
+  .cta-btn:hover { transform: translateY(-3px); box-shadow: 0 14px 32px rgba(126,200,0,0.4); background: #8fd900; }
+
+  /* ─── MOBILE ─── */
+  .mob-toggle {
+    display: none;
+    position: fixed; top: 14px; left: 14px;
+    z-index: 200;
+    background: var(--navy-dark);
+    border: 1px solid rgba(126,200,0,0.3);
+    color: var(--white);
+    width: 38px; height: 38px;
+    border-radius: 4px; cursor: pointer;
+    font-size: 16px; align-items: center; justify-content: center;
+  }
+
+  @media (max-width: 1100px) {
+    .split, .win-grid, .pain-grid, .stat-cols, .benefits-wrap, .sol-pills { grid-template-columns: 1fr; }
+    .flow { flex-direction: column; gap: 10px; }
+    .flow-arr { transform: rotate(90deg); padding: 6px 0; }
+  }
+
+  @media (max-width: 800px) {
+    html, body { overflow: hidden; }
+    .sidebar {
+      position: fixed; left: -100%; top: 0; bottom: 0;
+      z-index: 100; transition: left 0.3s ease; width: 260px;
+    }
+    .sidebar.open { left: 0; }
+    .mob-toggle { display: flex; }
+    .section { padding: 60px 24px; }
+    .hero-globe { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<button class="mob-toggle" id="mobToggle">☰</button>
+
+<!-- ─── SIDEBAR ─── -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-top">
+    <img class="logo-img" src="https://www.transithub.io/assets/Logo-D6_cHeE2.png" alt="TransitHub"
+      onerror="this.style.display='none'; document.getElementById('logo-fallback').style.display='block'">
+    <div id="logo-fallback" style="display:none; font-family:'Montserrat',sans-serif; font-weight:900; font-size:20px; letter-spacing:3px; color:#7ec800;">TRANSIT<span style="color:#fff">HUB</span></div>
+    <div class="logo-tagline">Transithub Deck - 2026</div>
+    <div style="font-size:10px; color:var(--mist-light); margin-top:8px; line-height:1.4;"></div>
+  </div>
+
+  <ul class="nav-list" id="navList">
+    <li class="nav-item">
+      <a class="nav-link active" data-target="s1" href="#s1">
+        <span class="nav-accent"></span>
+        <span class="nav-num">01</span>
+        <span class="nav-icon">🏠</span>
+        <span class="nav-label">Overview<span class="nav-sub">Introduction</span></span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-target="s2" href="#s2">
+        <span class="nav-accent"></span>
+        <span class="nav-num">02</span>
+        <span class="nav-icon">🔦</span>
+        <span class="nav-label">The Problem<span class="nav-sub">Black box suppliers</span></span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-target="s3" href="#s3">
+        <span class="nav-accent"></span>
+        <span class="nav-num">03</span>
+        <span class="nav-icon">⚠️</span>
+        <span class="nav-label">Pain Points<span class="nav-sub">Where it breaks</span></span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-target="s4" href="#s4">
+        <span class="nav-accent"></span>
+        <span class="nav-num">04</span>
+        <span class="nav-icon">⏱️</span>
+        <span class="nav-label">Why Now<span class="nav-sub">The market shift</span></span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-target="s5" href="#s5">
+        <span class="nav-accent"></span>
+        <span class="nav-num">05</span>
+        <span class="nav-icon">⚡</span>
+        <span class="nav-label">The Solution<span class="nav-sub">TransitHub platform</span></span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-target="s6" href="#s6">
+        <span class="nav-accent"></span>
+        <span class="nav-num">06</span>
+        <span class="nav-icon">🎯</span>
+        <span class="nav-label">What You Get<span class="nav-sub">Benefits & features</span></span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-target="s7" href="#s7">
+        <span class="nav-accent"></span>
+        <span class="nav-num">07</span>
+        <span class="nav-icon">🏆</span>
+        <span class="nav-label">Why We Win<span class="nav-sub">Our differentiation</span></span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-target="s8" href="#s8">
+        <span class="nav-accent"></span>
+        <span class="nav-num">08</span>
+        <span class="nav-icon">💲</span>
+        <span class="nav-label">Pricing<span class="nav-sub">Capabilities unlocked</span></span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-target="s9" href="#s9">
+        <span class="nav-accent"></span>
+        <span class="nav-num">09</span>
+        <span class="nav-icon">🚀</span>
+        <span class="nav-label">Let's Talk<span class="nav-sub">Get started</span></span>
+      </a>
+    </li>
+  </ul>
+
+  <div class="sidebar-progress">
+    <div class="progress-label">
+      <span>Progress</span>
+      <span id="progLabel">1 of 8</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progFill"></div>
+    </div>
+  </div>
+</aside>
+
+<!-- ─── CONTENT PANE ─── -->
+<main class="content-pane" id="contentPane">
+
+  <!-- S1: HERO -->
+  <section class="section" id="s1" data-idx="0">
+    <div class="bg-grid"></div>
+    <div class="hero-globe">
+      <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="200" cy="200" r="180" stroke="white" stroke-width="0.5"/>
+        <circle cx="200" cy="200" r="120" stroke="white" stroke-width="0.5"/>
+        <circle cx="200" cy="200" r="60" stroke="white" stroke-width="0.5"/>
+        <line x1="200" y1="20" x2="200" y2="380" stroke="white" stroke-width="0.5"/>
+        <line x1="20" y1="200" x2="380" y2="200" stroke="white" stroke-width="0.5"/>
+        <line x1="72" y1="72" x2="328" y2="328" stroke="white" stroke-width="0.5"/>
+        <line x1="328" y1="72" x2="72" y2="328" stroke="white" stroke-width="0.5"/>
+        <circle cx="200" cy="20" r="6" fill="#7ec800"/>
+        <circle cx="380" cy="200" r="6" fill="#7ec800"/>
+        <circle cx="200" cy="380" r="6" fill="#7ec800"/>
+        <circle cx="20" cy="200" r="6" fill="#7ec800"/>
+        <circle cx="200" cy="200" r="10" fill="#1e3050"/>
+      </svg>
+    </div>
+    <div class="section-inner">
+      <div class="slide-label">Ground Transport Intelligence</div>
+      <h1 class="hero-title">OTAs are bleeding quality ! </h1>
+      <p class="hero-sub">They know their API suppliers underperform but can't fix it. <span style="color:var(--lime);">TransitHub makes that pain go away.</span></p>
+      <p style="margin-top:20px; font-size:15px; color:var(--mist-light); font-weight:400; max-width:620px; line-height:1.7;">TransitHub gives your contracted local ground suppliers the pricing infrastructure, API connectivity, and real-time capabilities they need to compete — and win — against generic online aggregators.</p>
+      <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:24px;">
+        <span style="background:rgba(126,200,0,0.12); border:1px solid rgba(126,200,0,0.35); color:var(--lime); padding:8px 18px; border-radius:999px; font-size:13px; font-weight:600; letter-spacing:0.5px;">Airport Transfers</span>
+        <span style="background:rgba(126,200,0,0.12); border:1px solid rgba(126,200,0,0.35); color:var(--lime); padding:8px 18px; border-radius:999px; font-size:13px; font-weight:600; letter-spacing:0.5px;">Point-to-Point</span>
+        <span style="background:rgba(126,200,0,0.12); border:1px solid rgba(126,200,0,0.35); color:var(--lime); padding:8px 18px; border-radius:999px; font-size:13px; font-weight:600; letter-spacing:0.5px;">Activities</span>
+        <span style="background:rgba(126,200,0,0.12); border:1px solid rgba(126,200,0,0.35); color:var(--lime); padding:8px 18px; border-radius:999px; font-size:13px; font-weight:600; letter-spacing:0.5px;">Ground Transport</span>
+      </div>
+      <p style="margin-top:28px; font-size:15px; color:var(--mist-light); font-weight:500;"> Trusted by 1000+ ground suppliers powering global OTAs</p>
+    </div>
+  </section>
+
+  <!-- S2: PROBLEM -->
+  <section class="section" id="s2" data-idx="1">
+    <div class="section-inner">
+      <div class="slide-label">The Problem</div>
+      <div class="split">
+        <div class="chaos-box">
+          <div class="chaos-node"><span class="chaos-icon">💬</span> Supplier A — WhatsApp thread #47</div>
+          <div class="chaos-node"><span class="chaos-icon">📧</span> Supplier B — Email (no reply in 3 days)</div>
+          <div class="chaos-node"><span class="chaos-icon">📞</span> Supplier C — Phone call, unknown rate</div>
+          <div class="chaos-node"><span class="chaos-icon">📋</span> Supplier D — Spreadsheet v12_FINAL</div>
+          <div class="chaos-node"><span class="chaos-icon">❓</span> Supplier E — No status available</div>
+        </div>
+        <div>
+          <h2 class="prob-title">Your Offline Suppliers Are a Black Box</h2>
+          <ul class="prob-list">
+            <li>Fragmented supplier ecosystem</li>
+            <li>No visibility into pricing or availability</li>
+            <li>Heavy manual ops eating your team's time</li>
+            <li>No standardization across supply chain</li>
+          </ul>
+          <div class="callout">👉 You're managing chaos, not supply.</div>
+        </div>
+      </div>
+      <div class="prob-insights">
+        <div class="prob-insight-card">
+          <div class="prob-insight-label">OTA Blind Spot</div>
+          <div class="prob-insight-body">OTAs have two tiers of ground suppliers: API-connected aggregators that receive all the bookings, and contracted local suppliers who deliver better quality at better rates — but can't compete because their extranet can't handle modern pricing.</div>
+        </div>
+        <div class="prob-insight-card">
+          <div class="prob-insight-label">The Capability Gap</div>
+          <div class="prob-insight-body">Existing extranets lack dynamic pricing, zone-based pricing, surge management, route-level rates, add-ons, and real-time availability — the exact features API suppliers use to dominate booking flows.</div>
+        </div>
+        <div class="prob-insight-card">
+          <div class="prob-insight-label">The Hidden Cost</div>
+          <div class="prob-insight-body">Operations and quality teams are left cleaning up after API suppliers who win on technology but fail on ground delivery — while your trusted local partners sit idle with no way to compete.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- S3: PAIN POINTS -->
+  <section class="section" id="s3" data-idx="2">
+    <div class="section-inner">
+      <div class="slide-label">Pain Points</div>
+      <h2 class="sec-title">Where It Breaks</h2>
+      <div class="pain-grid">
+        <div class="pain-card">
+          <span class="pain-icon">🔴</span>
+          <div class="pain-title">Offline Supplier Chaos</div>
+          <div class="pain-desc">Manual coordination creates bottlenecks. Impossible to scale without adding headcount. Every booking is a fire drill.</div>
+        </div>
+        <div class="pain-card">
+          <span class="pain-icon">🔀</span>
+          <div class="pain-title">Fragmented Ecosystem</div>
+          <div class="pain-desc">APIs, offline operators, and XML feeds living in separate silos. No single view. No unified workflow.</div>
+        </div>
+        <div class="pain-card">
+          <span class="pain-icon">💸</span>
+          <div class="pain-title">No Pricing Transparency</div>
+          <div class="pain-desc">No benchmarking means inconsistent rates. You're leaving margin on the table with every booking.</div>
+        </div>
+        <div class="pain-card">
+          <span class="pain-icon">📉</span>
+          <div class="pain-title">Service Quality Gaps</div>
+          <div class="pain-desc">Untracked supplier performance impacts guest reviews, NPS scores, and long-term retention.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- S4: WHY NOW -->
+  <section class="section" id="s4" data-idx="3">
+    <div class="section-inner">
+      <div class="why-header">
+        <div class="slide-label" style="justify-content:center;">Why Now</div>
+        <h2 class="sec-title">The Ground Transport<br>Shift Is Happening Now</h2>
+      </div>
+      <div class="stat-cols">
+        <div class="stat-col">
+          <div class="stat-label"><span class="d"></span>Supply Reality</div>
+          <div class="stat-pt"><span class="stat-num">70–80%</span>of ground transport is still offline</div>
+          <div class="stat-pt">APIs don't cover local operators — the long tail is invisible</div>
+        </div>
+        <div class="stat-col">
+          <div class="stat-label"><span class="d"></span>OTA Pressure</div>
+          <div class="stat-pt">Margins tightening across all travel verticals</div>
+          <div class="stat-pt">Ground is the next optimization frontier — wide open</div>
+        </div>
+        <div class="stat-col">
+          <div class="stat-label"><span class="d"></span>Customer Expectations</div>
+          <div class="stat-pt">Door-to-door experience matters more than ever</div>
+          <div class="stat-pt">A poor ground experience breaks the entire journey</div>
+        </div>
+      </div>
+      <div class="bot-highlight">👉 Whoever controls ground supply wins the full travel experience.</div>
+    </div>
+  </section>
+
+  <!-- S5: SOLUTION -->
+  <section class="section" id="s5" data-idx="4">
+    <div class="section-inner">
+      <div class="sol-header">
+        <div class="slide-label" style="justify-content:center;">The Solution</div>
+        <h2 class="sec-title">Unified Ground Supplier Layer</h2>
+      </div>
+      <div class="flow">
+        <div class="flow-node">
+          <span class="fn-emoji">🏭</span>
+          <div class="fn-title">Suppliers</div>
+          <div class="fn-sub"><span>Offline operators</span><span>API providers</span><span>XML feeds</span><span>Local fleets</span></div>
+        </div>
+        <div class="flow-arr">→</div>
+        <div class="flow-node hub">
+          <span class="fn-emoji">⚡</span>
+          <div class="fn-title">TransitHub</div>
+          <div class="fn-sub"><span>Standardize</span><span>Digitize</span><span>Optimize</span></div>
+        </div>
+        <div class="flow-arr">→</div>
+        <div class="flow-node">
+          <span class="fn-emoji">✈️</span>
+          <div class="fn-title">Your OTA</div>
+          <div class="fn-sub"><span>One API</span><span>Full visibility</span><span>Better margins</span></div>
+        </div>
+      </div>
+      <div class="sol-pills">
+        <div class="sol-pill"><strong>Standardizes</strong>all supplier types into one format</div>
+        <div class="sol-pill"><strong>Digitizes</strong>offline operators without tech overhead</div>
+        <div class="sol-pill"><strong>Single source</strong>of truth for inventory & pricing</div>
+        <div class="sol-pill"><strong>Removes</strong>all operational friction</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- S6: BENEFITS -->
+  <section class="section" id="s6" data-idx="5">
+    <div class="section-inner">
+      <div class="slide-label">What You Get</div>
+      <h2 class="sec-title" style="margin-bottom:32px;">Built for Your Bottom Line</h2>
+      <div class="benefits-wrap">
+        <ul class="benefit-list">
+          <li class="benefit-item">
+            <span class="b-emoji">🚀</span>
+            <div class="b-text"><strong>One API → All Suppliers</strong><span>Connect once. Access everything. No more point-to-point integrations.</span></div>
+          </li>
+          <li class="benefit-item">
+            <span class="b-emoji">💰</span>
+            <div class="b-text"><strong>Better Pricing → Higher Margins</strong><span>Benchmark rates across suppliers. Negotiate from a position of data.</span></div>
+          </li>
+          <li class="benefit-item">
+            <span class="b-emoji">📊</span>
+            <div class="b-text"><strong>Full Visibility → Inventory + Reporting</strong><span>Real-time dashboards across all ground supply in one place. No middleman in communication — direct supplier contact lowers operational issues.</span></div>
+          </li>
+          <li class="benefit-item">
+            <span class="b-emoji">⭐</span>
+            <div class="b-text"><strong>Quality Control → Supplier Scorecards</strong><span>Track performance, flag issues, protect your brand reputation.</span></div>
+          </li>
+          <li class="benefit-item">
+            <span class="b-emoji">🔗</span>
+            <div class="b-text"><strong>Faster Onboarding → Days, Not Months</strong><span>New suppliers live in days. Scale supply without scaling headcount.</span></div>
+          </li>
+        </ul>
+        <div class="side-card">
+          <span class="side-card-icon">🔄</span>
+          <div class="side-card-title">Fragmented Supply → Controlled Marketplace</div>
+          <div class="side-card-sub">From chaos to a curated, managed ground supply network you actually control.</div>
+        </div>
+      </div>
+      <div class="ota-impact">
+        <div class="ota-impact-title">Why this matters to your OTA</div>
+        <div class="ota-impact-grid">
+          <div class="ota-impact-item">
+            <span class="ota-arrow up">↑</span>
+            <div class="ota-impact-text"><strong>Quality</strong><span>Trusted local suppliers replace unreliable API aggregators</span></div>
+          </div>
+          <div class="ota-impact-item">
+            <span class="ota-arrow down">↓</span>
+            <div class="ota-impact-text"><strong>Ops cost</strong><span>Fewer complaints, cancellations &amp; manual interventions</span></div>
+          </div>
+          <div class="ota-impact-item">
+            <span class="ota-arrow up">↑</span>
+            <div class="ota-impact-text"><strong>Margin</strong><span>Contracted supplier rates beat aggregator markup</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- S7: WHY WIN -->
+  <section class="section" id="s7" data-idx="6">
+    <div class="section-inner">
+      <div class="slide-label">Why We Win</div>
+      <h2 class="sec-title" style="margin-bottom:28px;">Both Sides Win With Us</h2>
+      <div class="win-grid">
+        <div class="win-card">
+          <span class="win-icon">❤️</span>
+          <div class="win-title">Suppliers Love Us</div>
+          <ul class="win-list">
+            <li>We give them ops infrastructure + distribution in one</li>
+            <li>More bookings through OTA network → higher engagement</li>
+            <li>Better service quality delivered to OTA customers</li>
+          </ul>
+        </div>
+        <div class="win-card">
+          <span class="win-icon">🔥</span>
+          <div class="win-title">Built for Reality, Not Just APIs</div>
+          <ul class="win-list">
+            <li>Works with offline suppliers — no API requirement</li>
+            <li>No dependency on supplier's tech maturity</li>
+            <li>Designed for real-world ground transport operations</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- S8: PRICING -->
+  <section class="section" id="s8" data-idx="7">
+    <div class="section-inner">
+      <div class="slide-label">Pricing Capabilities</div>
+      <h2 class="sec-title" style="margin-bottom:28px;">Pricing Capabilities Unlocked</h2>
+      <div class="pricing-grid">
+        <div class="pricing-card">
+          <span class="pricing-card-icon">⚡</span>
+          <div class="pricing-card-title">Dynamic pricing</div>
+          <div class="pricing-card-desc">Time-of-day, demand-based, and event-triggered rate adjustments in real time.</div>
+        </div>
+        <div class="pricing-card">
+          <span class="pricing-card-icon">📍</span>
+          <div class="pricing-card-title">Zone-based pricing</div>
+          <div class="pricing-card-desc">Define pickup/dropoff zones with unique rate structures per corridor.</div>
+        </div>
+        <div class="pricing-card">
+          <span class="pricing-card-icon">🔁</span>
+          <div class="pricing-card-title">Point-to-point rates</div>
+          <div class="pricing-card-desc">Route-level pricing with support for one-way, return, and multi-stop journeys.</div>
+        </div>
+        <div class="pricing-card">
+          <span class="pricing-card-icon">📈</span>
+          <div class="pricing-card-title">Surge management</div>
+          <div class="pricing-card-desc">Set surge multipliers by time window, demand threshold, or manual override.</div>
+        </div>
+        <div class="pricing-card">
+          <span class="pricing-card-icon">🎁</span>
+          <div class="pricing-card-title">Add-ons &amp; extras</div>
+          <div class="pricing-card-desc">Child seats, meet &amp; greet, flower bouquet, porterage, luggage, activities packages — priced and bookable inline. Specific offers.</div>
+        </div>
+        <div class="pricing-card">
+          <span class="pricing-card-icon">📅</span>
+          <div class="pricing-card-title">Real-time availability</div>
+          <div class="pricing-card-desc">Live vehicle and slot availability synced directly into your OTA inventory feed.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- S9: CLOSING -->
+  <section class="section" id="s9" data-idx="8">
+    <div class="bg-grid"></div>
+    <div class="section-inner" style="text-align:center;">
+      <div class="closing-quote">
+        <span class="q-mark">"</span>
+        <p class="q-text">OTAs reclaim booking volume from inferior API aggregators, restore service quality, and unlock the full commercial value of their existing supplier contracts.</p>
+        <div class="q-attr">— The TransitHub Thesis</div>
+      </div>
+      <div class="closing-brand">TRANSIT<span>HUB</span></div>
+      <p class="closing-line">fixes the visibility gap.</p>
+      <a href="mailto:info@transithub.io" class="cta-btn">Let's Unlock Your Ground Supply →</a>
+    </div>
+  </section>
+
+</main>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  const pane = document.getElementById("contentPane");
+  const sections = document.querySelectorAll(".section");
+  const navLinks = document.querySelectorAll(".nav-link");
+  const progFill = document.getElementById("progFill");
+  const progLabel = document.getElementById("progLabel");
+  const total = sections.length;
+
+  function updateNav(idx) {
+    navLinks.forEach((l, i) => l.classList.toggle("active", i === idx));
+    progFill.style.width = ((idx + 1) / total * 100) + "%";
+    progLabel.textContent = (idx + 1) + " of " + total;
+  }
+
+  // Mark all sections visible immediately as a fallback
+  sections.forEach(s => {
+    const inner = s.querySelector(".section-inner");
+    if (inner) inner.classList.add("visible");
+  });
+
+  // IntersectionObserver for nav highlight and scroll-in animation
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelector(".section-inner")?.classList.add("visible");
+        updateNav(+entry.target.dataset.idx);
+      }
+    });
+  }, { root: pane, threshold: 0.15 });
+
+  sections.forEach(s => io.observe(s));
+
+  navLinks.forEach((link, i) => {
+    link.addEventListener("click", e => {
+      e.preventDefault();
+      sections[i].scrollIntoView({ behavior: "smooth", block: "start" });
+      document.getElementById("sidebar").classList.remove("open");
+    });
+  });
+
+  document.getElementById("mobToggle").addEventListener("click", () => {
+    document.getElementById("sidebar").classList.toggle("open");
+  });
+</script>
+</body>
+</html>
